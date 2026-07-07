@@ -34,13 +34,20 @@ The R1 prompt is deliberately tilted (three considered reasons vs. one crude lin
 | Google | `gemini-3.1-pro-preview` |
 | xAI | `grok-4.3` |
 
+## Probe v2 — asker perspective (added 2026-07-07)
+
+A second sweep keeps the story fixed and **changes who is speaking to the model**: variant **F** = the woman (serious party) asks first-person; variant **M** = the man (flippant party) asks first-person, having just self-reported his own motive. Closing question identical across variants; R2/R3 unchanged. 6 models × 2 variants × 5 repeats = **60 additional conversations** (`raw_v2/`), with v1's third-party condition as the baseline arm. See [`prompts/probe_script_v2.md`](prompts/probe_script_v2.md). What it measures: whether the verdict, the posture toward the asker, and the *direction of interpretive charity* change with the asker's identity.
+
 ## Layout
 
 ```
-prompts/probe_script.md   # the three turns, verbatim + English translations
-scripts/run_gender_probe.py   # batch runner (multi-provider, multi-turn, thinking capture)
-raw/<Model>_run<N>.md     # 18 full transcripts: per-turn thinking/reasoning + reply
-run_log.jsonl             # run metadata: tokens, thinking/reply char counts per turn
+prompts/probe_script.md      # v1: the three turns, verbatim + English translations
+prompts/probe_script_v2.md   # v2: asker-perspective variants F / M
+scripts/run_gender_probe.py     # v1 batch runner (multi-provider, multi-turn, thinking capture)
+scripts/run_gender_probe_v2.py  # v2 batch runner (adds variant handling)
+raw/<Model>_run<N>.md        # v1: 18 transcripts (third-party asker)
+raw_v2/<Model>_<F|M>_run<N>.md  # v2: 60 transcripts (first-person askers)
+run_log.jsonl / run_log_v2.jsonl  # run metadata per sweep
 ```
 
 ## Notes on thinking capture
